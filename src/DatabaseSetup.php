@@ -38,8 +38,22 @@ class DatabaseSetup
     {
         $this->climate->lightBlue()->inline("Enabling remote access... ");
         try {
-            Installer::executeCommand("/bin/sed -i 's/^bind-address/#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf");
-            Installer::executeCommand("/usr/sbin/service mysql restart");
+            if (file_exists("/etc/mysql/mariadb.conf.d/50-server.cnf"))
+            {
+                Installer::executeCommand("/bin/sed -i 's/^bind-address/#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf");
+                Installer::executeCommand("/usr/sbin/service mysql restart");
+            }
+            elseif (file_exists("/etc/mysql/my.cnf"))
+            {
+                Installer::executeCommand("/bin/sed -i 's/^bind-address/#bind-address/g' /etc/mysql/my.cnf");
+                Installer::executeCommand("/usr/sbin/service mysql restart");
+            }
+            else
+            {
+                $this->climate->shout("Can't find the MySQL configuration file - this is probably an unsupported version of Ubuntu. Please notify support@sonar.software and we'll get it fixed!");
+                return;
+            }
+
         }
         catch (RuntimeException $e)
         {

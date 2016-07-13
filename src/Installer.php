@@ -66,6 +66,7 @@ class Installer
 
     /**
      * @param $command
+     * @param bool $withoutException
      */
     public static function executeCommand($command, $withoutException = false)
     {
