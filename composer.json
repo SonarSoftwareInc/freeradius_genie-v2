@@ -1,7 +1,7 @@
 {
-    "name": "sonarsoftware/freeradius_installer",
+    "name": "sonarsoftware/freeradius_genie",
     "type": "project",
-    "description": "A simple installer for FreeRADIUS, specifically to use it with Sonar.",
+    "description": "A simple installer and configuration tool for FreeRADIUS, specifically to use it with Sonar.",
     "keywords": ["sonar","sonar software","sonar freeradius","freeradius"],
     "homepage": "https://sonar.software",
     "license": "MIT",
