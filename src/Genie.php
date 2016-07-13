@@ -32,10 +32,10 @@ class Genie
         ];
         $input = $this->climate->lightGreen()->radio('Please select an action to perform:', $options);
         $response = $input->prompt();
-        if (trim($response) == null)
+        while (trim($response) == null)
         {
             $this->climate->shout("Please select an option with spacebar, and then press enter.");
-            $this->initialSelection();
+            $response = $input->prompt();
         }
 
         if ($response !== "_quit")
@@ -81,10 +81,10 @@ class Genie
         $options['back'] = 'Go back one level';
         $input = $this->climate->lightGreen()->radio('Please select an action to perform:', $options);
         $response = $input->prompt();
-        if (trim($response) == null)
+        while (trim($response) == null)
         {
             $this->climate->shout("Please select an option with spacebar, and then press enter.");
-            $this->handleSubmenu($selection);
+            $response = $input->prompt();
         }
         $this->handleSubmenuSelection($selection, $response);
     }
