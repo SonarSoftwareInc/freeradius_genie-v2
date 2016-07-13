@@ -102,3 +102,42 @@ Once this configuration is done, we need to add the RADIUS server into Sonar. In
 ![Configuring Sonar](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/sonar_config.png)
 
 Enter all the information you have - the **Database Name** is *radius* and the **Database Port** is *3306*. Once the information is entered, click the **Validate Credentials** button at the top and you should see **Current Server Status** show *Accessible*.
+
+## Basic PPPoE configuration
+
+Once this is done, you'll have a basic setup in place to enable PPPoE. Here's a quick tutorial on setting up a simple PPPoE configuration on a MikroTik router.
+
+First, we need to setup our IP pools. These should correspond to IP pools you have created in your Sonar IPAM - refer to the Sonar documentation for details on this! To configure pools, navigate to **IP > Pool** in your MikroTik. You can create
+as many IP pools here as you need, and chain them together so that if one pool is full, the next one is used. You can statically assign IPs to users from within Sonar by associating an IP with their RADIUS account. If you don't do this, then an IP will
+be selected from an available pool when the client connects, and Sonar will dynamically learn that IP and enter it as a soft assignment inside Sonar.
+
+![IP Pool](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/pool.png)
+
+The pool configuration is pretty simple - a start IP, an end IP, and the next pool to use if this one is full.
+
+Once you've configured your pools, click **PPP** in the menu on the left and then click the **Profiles** tab. Click the **+** button to create a new profile.
+
+We're going to configure a very basic profile. Enter a name, select a local address to use for the profile (in this example, I used the first IP in the subnet for my pool - note that this IP is *not* included in my pool range!) and for remote address, select your first pool.
+Enter some DNS servers to assign to users, and under the **Limits** tab, set a session timeout. This will disconnect users after a certain period of time and they will have to reconnect. If you want to allow infinite sessions, don't set a timeout. Something like 24 hours is a reasonable
+setting if you want to have a timeout value.
+
+![PPP Profile](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/profile.png)
+
+Once your profile is configured, click the **Secrets** tab, and click the **PPP Authentication&Accounting button**.
+
+![AAA](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/profile.png)
+
+Make sure *Use Radius* is checked, and that *Accounting* is checked. Make sure *Interim Update* is set to a reasonable value in minutes. This is how frequently this MikroTik will send accounting data to your RADIUS server. If you make this too short, and you have a lot of clients, your server will become overloaded.
+There is no hard and fast rule as to what to use here. The shorter the time, the more often accounting data will be sent to the RADIUS server, and the more frequently you'll see updates as to users data usage in Sonar. If you have a very small network (a few hundred users) you can probably set this to a low value (1-5 minutes) without
+much impact. For larger networks, set this to at least 15 minutes - you may need to increase it even more for very large networks!
+
+Now click the **PPPoE Servers** tab, and click the **+** button to create a server.
+
+![PPPoE Server](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/pppoeserver.png)
+
+Enter a name for the server, select the interface that your clients will be connecting on, and select the profile we created earlier. If you only want to allow one PPPoE session per host (which you probably do!) check *One Session Per Host*. Make sure all the authentication options at the bottom are checked.
+
+You now have a very basic, functioning PPPoE server. Login to your Sonar instance, navigate to a user account, and access the **Network** tab, and then the **RADIUS** tab. Create a new RADIUS account and note the username and password.
+ 
+Now, back in the MikroTik, Click the **Active Connections** tab and try connecting using a PPPoE client, authenticating using the credentials you just created in Sonar. You should be assigned an IP from the pool, and the connection will show up in the list! To assign a static IP, navigate back into Sonar, 
+go to the **Network** tab on an account, and then **IP Assignments**. Assign an IP to the RADIUS account, and then disconnect and reconnect your PPPoE client. You will be assigned the static IP you selected.
