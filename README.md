@@ -62,7 +62,7 @@ In Genie (remember, to bring up Genie, just type `php genie`) make sure you're a
 
 The tool will then return a random secret to you - **copy this, as you will need to enter it into the PPPoE concentrator!**
 
-We can now add this RADIUS server to our MikroTik to use it to manage our PPPoE sessions. This step will differ depending on your NAS manufacturer - refer to the manual if you're unsure. Jump into your MikroTik using (WinBox)[http://www.mikrotik.com/download]
+We can now add this RADIUS server to our MikroTik to use it to manage our PPPoE sessions. This step will differ depending on your NAS manufacturer - refer to the manual if you're unsure. Jump into your MikroTik using [WinBox](http://www.mikrotik.com/download)
 
 ![Add RADIUS to MikroTik](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/add_radius_to_mikrotik.png)
 
@@ -74,3 +74,5 @@ Click **RADIUS** on the left, click the **+** button in the window that appears,
 4. Under **Src. Address**, enter the IP that you entered into Genie when you created the NAS.
 
 OK, your MikroTik is now setup to use RADIUS for PPP! We'll get into some deeper configuration later on.
+
+You can also view all the NAS you've setup in your RADIUS server by selecting the **List NAS Entries** in Genie, and you can remove a NAS by using the **Remove NAS** option.

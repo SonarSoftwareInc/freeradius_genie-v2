@@ -25,9 +25,9 @@ class Genie
     public function initialSelection()
     {
         $options = [
-            '_initial' => 'Initial Configuration',
+            '_initial' => 'Initial configuration',
             '_nas' => 'NAS configuration',
-            '_users' => 'User configuration',
+            '_mysqlRemote' => 'MySQL remote access configuration',
             '_quit' => 'Quit',
         ];
         $input = $this->climate->lightGreen()->radio('Please select an action to perform:', $options);
@@ -101,6 +101,8 @@ class Genie
                     'list' => 'List NAS entries',
                 ];
                 break;
+            case "_mysqlRemote":
+                break;
             default:
                 break;
         }
@@ -164,8 +166,10 @@ class Genie
                         $nasManagement->addNas();
                         break;
                     case "remove":
+                        $nasManagement->deleteNas();
                         break;
                     case "list":
+                        $nasManagement->listNas();
                         break;
                 }
                 break;

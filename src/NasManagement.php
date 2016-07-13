@@ -23,12 +23,16 @@ class NasManagement
     {
         $input = $this->climate->lightBlue()->input("What is the NAS IP address?");
         $ipAddress = null;
-        while ($ipAddress == null)
+        while ($ipAddress == null || filter_var($ipAddress, FILTER_VALIDATE_IP) === false)
         {
             $ipAddress = $input->prompt();
             if ($ipAddress == null)
             {
                 $this->climate->shout("You must input an IP address.");
+            }
+            elseif (filter_var($ipAddress, FILTER_VALIDATE_IP) === false)
+            {
+                $this->climate->shout("That IP address is not valid.");
             }
         }
 
@@ -77,6 +81,59 @@ class NasManagement
         catch (RuntimeException $e)
         {
             $this->shout("Failed to restart FreeRADIUS: {$e->getMessage()}");
+        }
+    }
+
+    /**
+     * List all the NAS
+     */
+    public function listNas()
+    {
+        $sth = $this->dbh->prepare("SELECT id, nasname, shortname FROM nas ORDER BY id ASC");
+        $sth->execute();
+        $i = 1;
+        foreach ($sth->fetchAll() as $record)
+        {
+            $this->climate->bold()->lightBlue("$i. {$record['nasname']} ({$record['shortname']})");
+            $i++;
+        }
+    }
+
+    /**
+     * Delete a NAS
+     */
+    public function deleteNas()
+    {
+        $input = $this->climate->lightBlue()->input("What is the IP address of the NAS you want to remove?");
+        $ipAddress = null;
+        while ($ipAddress == null || filter_var($ipAddress, FILTER_VALIDATE_IP) === false)
+        {
+            $ipAddress = $input->prompt();
+            if ($ipAddress == null)
+            {
+                $this->climate->shout("You must input an IP address.");
+            }
+            elseif (filter_var($ipAddress, FILTER_VALIDATE_IP) === false)
+            {
+                $this->climate->shout("That IP address is not valid.");
+            }
+        }
+
+        $sth = $this->dbh->prepare("DELETE from nas WHERE nasname=?");
+        if ($sth->execute([$ipAddress]))
+        {
+            $this->climate->shout("NAS was deleted!");
+            try {
+                Installer::executeCommand("/usr/sbin/service freeradius restart");
+            }
+            catch (RuntimeException $e)
+            {
+                $this->climate->shout("Failed to restart FreeRADIUS!");
+            }
+        }
+        else
+        {
+            $this->climate->shout("Failed to delete the NAS from the database. Maybe the IP wasn't found? Try using the List NAS entries function first.");
         }
     }
 }
