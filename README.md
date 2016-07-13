@@ -121,11 +121,11 @@ We're going to configure a very basic profile. Enter a name, select a local addr
 Enter some DNS servers to assign to users, and under the **Limits** tab, set a session timeout. This will disconnect users after a certain period of time and they will have to reconnect. If you want to allow infinite sessions, don't set a timeout. Something like 24 hours is a reasonable
 setting if you want to have a timeout value.
 
-![PPP Profile](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/profile.png)
+![PPP Profile](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/ppp.png)
 
 Once your profile is configured, click the **Secrets** tab, and click the **PPP Authentication&Accounting button**.
 
-![AAA](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/profile.png)
+![AAA](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/aaa.png)
 
 Make sure *Use Radius* is checked, and that *Accounting* is checked. Make sure *Interim Update* is set to a reasonable value in minutes. This is how frequently this MikroTik will send accounting data to your RADIUS server. If you make this too short, and you have a lot of clients, your server will become overloaded.
 There is no hard and fast rule as to what to use here. The shorter the time, the more often accounting data will be sent to the RADIUS server, and the more frequently you'll see updates as to users data usage in Sonar. If you have a very small network (a few hundred users) you can probably set this to a low value (1-5 minutes) without
