@@ -102,6 +102,12 @@ class Genie
                 ];
                 break;
             case "_mysqlRemote":
+                $options = [
+                    'enable' => 'Enable remote access',
+                    'disable' => 'Disable remote access',
+                    'add_user' => 'Add a remote access user',
+                    'remove_user' => 'Remove a remote access user',
+                ];
                 break;
             default:
                 break;
@@ -135,13 +141,14 @@ class Genie
      */
     private function doSubMenuAction($selection, $subMenuSelection)
     {
+        $databaseSetup = new DatabaseSetup();
+
         switch ($selection)
         {
             case "_initial":
                 switch ($subMenuSelection) {
                     case "database":
                         try {
-                            $databaseSetup = new DatabaseSetup();
                             $databaseSetup->createInitialDatabase();
                         }
                         catch (Exception $e)
@@ -170,6 +177,21 @@ class Genie
                         break;
                     case "list":
                         $nasManagement->listNas();
+                        break;
+                }
+                break;
+            case "_mysqlRemote":
+                switch ($subMenuSelection)
+                {
+                    case "enable":
+                        $databaseSetup->enableRemoteAccess();
+                        break;
+                    case "disable":
+                        $databaseSetup->disableRemoteAccess();
+                        break;
+                    case "add_user":
+                        break;
+                    case "remove_user":
                         break;
                 }
                 break;

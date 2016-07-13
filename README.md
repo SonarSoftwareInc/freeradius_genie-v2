@@ -1,9 +1,9 @@
-# FreeRADIUS Installer
+# FreeRADIUS Genie
 An installer to setup and configure FreeRADIUS for use with Sonar. **This is currently unfinished and not ready for production!**
 
 ## Getting started
 
-This installer is designed to be run on [Ubuntu 16.04 64bit](http://www.ubuntu.com/download/server). Download and install Ubuntu on the server you wish to run FreeRADIUS on. If you want to host it online, I recommend [Digital Ocean](https://m.do.co/c/84841b1bca8e).
+This installer is designed to be run on [Ubuntu 16.04 64bit](http://www.ubuntu.com/download/server), but should work on most versions of Ubuntu. Download and install Ubuntu on the server you wish to run FreeRADIUS on. If you want to host it online, I recommend [Digital Ocean](https://m.do.co/c/84841b1bca8e).
 
 Once Ubuntu is installed, SSH in and run the following commands to prepare installation:
 
@@ -76,3 +76,11 @@ Click **RADIUS** on the left, click the **+** button in the window that appears,
 OK, your MikroTik is now setup to use RADIUS for PPP! We'll get into some deeper configuration later on.
 
 You can also view all the NAS you've setup in your RADIUS server by selecting the **List NAS Entries** in Genie, and you can remove a NAS by using the **Remove NAS** option.
+
+### Configuring MySQL for remote access
+
+We also need to configure the MySQL server to allow remote access from Sonar, so that Sonar can write and read records for the RADIUS server. Let's do that now. Navigate into the **MySQL remote access configuration** menu, and select **Enable remote access**.
+
+![Enabling remote access](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/enable_remote_access.png)
+
+This makes the MySQL server listen for connections on all interfaces on the server, rather than just to localhost (127.0.0.1). Now we need to setup a remote user account, so that your Sonar instance can access the database.
