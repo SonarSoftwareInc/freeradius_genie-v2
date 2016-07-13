@@ -23,6 +23,9 @@ class DatabaseSetup
     {
         $this->climate->lightBlue()->inline("Creating initial database... ");
         $this->dbh->exec("CREATE DATABASE radius;");
+        $sth = $this->dbh->prepare("GRANT ALL PRIVILEGES ON radius.* TO 'radius'@'127.0.0.1' IDENTIFIED BY ?");
+        $sth->execute([getenv('MYSQL_PASSWORD')]);
+        $this->dbh->exec("FLUSH PRIVILEGES");
         exec("/usr/bin/mysql -uroot -p" . escapeshellarg(getenv("MYSQL_PASSWORD")) . " radius < /etc/freeradius/sql/mysql/schema.sql");
         exec("/usr/bin/mysql -uroot -p" . escapeshellarg(getenv("MYSQL_PASSWORD")) . " radius < /etc/freeradius/sql/mysql/nas.sql");
         $this->climate->info("SUCCESS!");

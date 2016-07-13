@@ -24,7 +24,7 @@ class FreeRadiusSetup
         try {
             Installer::executeCommand("/bin/cp " . __DIR__ . "/../conf/radiusd.conf /etc/freeradius/");
             Installer::executeCommand("/bin/cp " . __DIR__ . "/../conf/sql.conf /etc/freeradius/");
-            Installer::executeCommand("/bin/sed -i 's/login = \"radius\"/login = \"root\"/g' /etc/freeradius/sql.conf");
+            Installer::executeCommand("/bin/cp " . __DIR__ . "/../conf/default /etc/freeradius/sites-available/");
             Installer::executeCommand("/bin/sed -i 's/password = \"radpass\"/password = \"$mysqlPassword\"/g' /etc/freeradius/sql.conf");
             Installer::executeCommand("/usr/sbin/service freeradius restart");
         }
