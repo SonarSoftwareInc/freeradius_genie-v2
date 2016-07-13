@@ -30,7 +30,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/SonarSoftware/freeradius_installer"
+            "url": "https://github.com/SonarSoftware/freeradius_genie"
         }
     ]
 }
