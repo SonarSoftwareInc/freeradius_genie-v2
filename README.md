@@ -13,7 +13,7 @@ Once Ubuntu is installed, SSH in and run the following commands to prepare insta
 
 If you're using an older version of Ubuntu, you may need to run `sudo apt-get install php5-cli php5-mbstring php5-mysql unzip` instead.
 
-Once these commands are complete, you can download the installer by executing `wget https://github.com/SonarSoftware/freeradius_genie/archive/master.zip` and then `unzip master.zip`. Once unzipped, enter the directory by typing `cd freeradius_genie-master`. You can also install it using [Composer](https://getcomposer.org) if you prefer!
+Once these commands are complete, you can download the installer by executing `wget https://github.com/SonarSoftware/freeradius_genie/archive/master.zip` and then `unzip master.zip`. Once unzipped, enter the directory by typing `cd freeradius_genie-master`. You can also install it using [Composer](https://getcomposer.org) if you prefer - just `composer require sonarsoftware/freeradius_genie`!
 
 Now execute the installer by running `php installer.php`
 
