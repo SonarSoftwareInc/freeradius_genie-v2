@@ -66,4 +66,46 @@ class DatabaseSetup
         }
         $this->climate->info("SUCCESS!");
     }
+
+    /**
+     * Add a remote access user
+     */
+    public function addRemoteAccessUser()
+    {
+        $input = $this->climate->lightBlue()->input("What is the IP address of the remote server that will be accessing the database?");
+        $ipAddress = null;
+        while ($ipAddress == null || filter_var($ipAddress, FILTER_VALIDATE_IP) === false)
+        {
+            $ipAddress = $input->prompt();
+            if ($ipAddress == null)
+            {
+                $this->climate->shout("You must input an IP address.");
+            }
+            elseif (filter_var($ipAddress, FILTER_VALIDATE_IP) === false)
+            {
+                $this->climate->shout("That IP address is not valid.");
+            }
+        }
+
+        $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        $username = '';
+        for ($i = 0; $i < 16; $i++) {
+            $username .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        $password = '';
+        for ($i = 0; $i < 16; $i++) {
+            $password .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        $sth = $this->dbh->prepare("GRANT ALL ON radius.* TO ?@? IDENTIFIED BY ?");
+        if ($sth->execute([$username, $ipAddress, $password]))
+        {
+            $this->climate->lightMagenta("Added a user with the username $username and the password $password. Copy this username and password, you'll need it!");
+        }
+        else
+        {
+            $this->climate->shout("Failed to create the user!");
+        }
+    }
 }

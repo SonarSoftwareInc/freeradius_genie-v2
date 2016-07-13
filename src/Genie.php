@@ -190,6 +190,7 @@ class Genie
                         $databaseSetup->disableRemoteAccess();
                         break;
                     case "add_user":
+                        $databaseSetup->addRemoteAccessUser();
                         break;
                     case "remove_user":
                         break;
