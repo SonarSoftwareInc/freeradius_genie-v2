@@ -106,6 +106,7 @@ class Genie
                     'enable' => 'Enable remote access',
                     'disable' => 'Disable remote access',
                     'add_user' => 'Add a remote access user',
+                    'list_users' => 'List remote access users',
                     'remove_user' => 'Remove a remote access user',
                 ];
                 break;
@@ -192,7 +193,11 @@ class Genie
                     case "add_user":
                         $databaseSetup->addRemoteAccessUser();
                         break;
+                    case "list_users":
+                        $databaseSetup->listRemoteAccessUsers();
+                        break;
                     case "remove_user":
+                        $databaseSetup->deleteRemoteAccessUser();
                         break;
                 }
                 break;

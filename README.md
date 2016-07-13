@@ -99,6 +99,6 @@ If you ever need to add a new user, view the existing users, or remove a user, y
 
 Once this configuration is done, we need to add the RADIUS server into Sonar. Inside your Sonar instance, enter the **Network** navigation menu entry and click **RADIUS Server**.
 
-![Configuring Sonar](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/sonar.png)
+![Configuring Sonar](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/sonar_config.png)
 
 Enter all the information you have - the **Database Name** is *radius* and the **Database Port** is *3306*. Once the information is entered, click the **Validate Credentials** button at the top and you should see **Current Server Status** show *Accessible*.

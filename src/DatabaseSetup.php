@@ -3,6 +3,7 @@
 namespace SonarSoftware\FreeRadius;
 
 use League\CLImate\CLImate;
+use PDO;
 use RuntimeException;
 
 class DatabaseSetup
@@ -101,11 +102,67 @@ class DatabaseSetup
         $sth = $this->dbh->prepare("GRANT ALL ON radius.* TO ?@? IDENTIFIED BY ?");
         if ($sth->execute([$username, $ipAddress, $password]))
         {
+            $sth = $this->dbh->prepare("FLUSH PRIVILEGES");
+            $sth->execute();
             $this->climate->lightMagenta("Added a user with the username $username and the password $password. Copy this username and password, you'll need it!");
         }
         else
         {
             $this->climate->shout("Failed to create the user!");
+        }
+    }
+
+    /**
+     * List all the remote access users
+     */
+    public function listRemoteAccessUsers()
+    {
+        $sth = $this->dbh->prepare("SELECT Host, User FROM mysql.user WHERE Host != 'localhost' AND Host != '127.0.0.1'");
+        $sth->execute();
+        foreach ($sth->fetchAll(PDO::FETCH_ASSOC) as $result)
+        {
+            $this->climate->lightBlue("{$result['User']} can be used from {$result['Host']}");
+        }
+    }
+
+    /**
+     * Delete a remote access user
+     */
+    public function deleteRemoteAccessUser()
+    {
+        $input = $this->climate->lightBlue()->input("What is the username you want to remove?");
+        $username = null;
+        while ($username == null)
+        {
+            $username = $input->prompt();
+            if ($username == null)
+            {
+                $this->climate->shout("You must input a username.");
+            }
+        }
+
+        $sth = $this->dbh->prepare("SELECT Host, User FROM mysql.user WHERE Host != 'localhost' AND Host != '127.0.0.1' AND User=?");
+        if ($sth->execute([$username]))
+        {
+            $result = $sth->fetch(PDO::FETCH_ASSOC);
+            $host = $result['Host'];
+
+            $sth = $this->dbh->prepare("DELETE FROM mysql.user WHERE Host=? AND User=?");
+            if ($sth->execute([$host, $username]))
+            {
+                $sth = $this->dbh->prepare("FLUSH PRIVILEGES");
+                $sth->execute();
+                $this->climate->info("User removed!");
+            }
+            else
+            {
+                $this->climate->shout("Failed to remove user!");
+            }
+            return;
+        }
+        else
+        {
+            $this->climate->shout("User not found, or is not a remote user. Check the username and try again.");
         }
     }
 }
