@@ -62,7 +62,7 @@ In Genie (remember, to bring up Genie, just type `php genie`) make sure you're a
 
 The tool will then return a random secret to you - **copy this, as you will need to enter it into the PPPoE concentrator!**
 
-We can now add this RADIUS server to our MikroTik to use it to manage our PPPoE sessions. This step will differ depending on your NAS manufacturer - refer to the manual if you're unsure. Jump into your MikroTik using [WinBox](http://www.mikrotik.com/download)
+We can now add this RADIUS server to our MikroTik to use it to manage our PPPoE sessions. This step will differ depending on your NAS manufacturer - refer to the manual if you're unsure. Jump into your MikroTik using [WinBox](http://www.mikrotik.com/download).
 
 ![Add RADIUS to MikroTik](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/add_radius_to_mikrotik.png)
 
@@ -92,3 +92,13 @@ Genie will ask you for the IP address of the remote server. If you don't know th
 Once you add the remote access user, Genie will give you back a random username and password. Copy this down - we'll need it in a minute!
 
 ![Adding a MySQL user](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/add_mysql_user.png)
+
+If you ever need to add a new user, view the existing users, or remove a user, you can also do that in this menu.
+
+### Linking your FreeRADIUS server to Sonar
+
+Once this configuration is done, we need to add the RADIUS server into Sonar. Inside your Sonar instance, enter the **Network** navigation menu entry and click **RADIUS Server**.
+
+![Configuring Sonar](https://github.com/SonarSoftware/freeradius_genie/blob/master/images/sonar.png)
+
+Enter all the information you have - the **Database Name** is *radius* and the **Database Port** is *3306*. Once the information is entered, click the **Validate Credentials** button at the top and you should see **Current Server Status** show *Accessible*.
