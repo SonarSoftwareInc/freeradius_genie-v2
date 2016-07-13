@@ -94,6 +94,13 @@ class Genie
                     'configure_freeradius' => 'Perform initial FreeRADIUS configuration',
                 ];
                 break;
+            case "_nas":
+                $options = [
+                    'add' => 'Add NAS',
+                    'remove' => 'Remove NAS',
+                    'list' => 'List NAS entries',
+                ];
+                break;
             default:
                 break;
         }
@@ -146,6 +153,19 @@ class Genie
                         break;
                     default:
                         $this->climate->shout("Whoops - no handler defined for this action!");
+                        break;
+                }
+                break;
+            case "_nas":
+                $nasManagement = new NasManagement();
+                switch ($subMenuSelection)
+                {
+                    case "add":
+                        $nasManagement->addNas();
+                        break;
+                    case "remove":
+                        break;
+                    case "list":
                         break;
                 }
                 break;

@@ -19,9 +19,10 @@ class DatabaseSetup
      */
     public function createInitialDatabase()
     {
+        $this->climate->lightBlue()->inline("Creating initial database... ");
         $this->dbh->exec("CREATE DATABASE radius;");
         exec("/usr/bin/mysql -uroot -p" . escapeshellarg(getenv("MYSQL_PASSWORD")) . " radius < /etc/freeradius/sql/mysql/schema.sql");
         exec("/usr/bin/mysql -uroot -p" . escapeshellarg(getenv("MYSQL_PASSWORD")) . " radius < /etc/freeradius/sql/mysql/nas.sql");
-        $this->climate->info("Initial database created!");
+        $this->climate->info("SUCCESS!");
     }
 }
