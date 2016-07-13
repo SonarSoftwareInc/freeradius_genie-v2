@@ -1,5 +1,5 @@
 # FreeRADIUS Genie
-An installer to setup and configure FreeRADIUS for use with Sonar. **This is currently unfinished and not ready for production!**
+An installer to setup and configure FreeRADIUS for use with Sonar.
 
 ## Getting started
 
