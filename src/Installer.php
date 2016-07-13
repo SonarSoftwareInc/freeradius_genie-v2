@@ -40,7 +40,7 @@ class Installer
 
         $this->climate->bold()->info("Installation complete.");
         $this->climate->bold()->shout("You must configure your database before proceeding - run /usr/bin/mysql_secure_installation to begin.");
-        $this->climate->lightBlue("Refer to the documentation at https://github.com/SonarSoftware/freeradius_installer if you need help!");
+        $this->climate->lightBlue("Refer to the documentation at https://github.com/SonarSoftware/freeradius_genie if you need help!");
         $this->climate->bold()->info("Once your database is configured, run 'php genie' to access the simple Sonar FreeRADIUS configuration tool!");
     }
 
