@@ -34,7 +34,7 @@ Once this is done, we have a very basic server setup - FreeRADIUS and the MySQL 
 ## Configuration
 
 In order to allow the Sonar `genie` tool to setup everything else for you, you need to enter the MySQL root password you setup a minute ago in a **.env** file. Type `cp .env.example .env` and then `nano .env`. You'll see a line that says `MYSQL_PASSWORD=changeme`. Use 
-the backspace key to delete `changeme` and replace it with the MySQL root password you setup. Press `CTRL+X` to exit, and save your changes.
+the backspace key to delete `changeme` and replace it with the MySQL root password you setup. Press `CTRL+X` to exit, and save your changes. **Make sure you record this root password somewhere, as you will need it in the future!**
 
 Once that's done, we're ready to start using genie!
 
