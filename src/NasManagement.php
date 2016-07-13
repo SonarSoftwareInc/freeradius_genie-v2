@@ -80,7 +80,7 @@ class NasManagement
         }
         catch (RuntimeException $e)
         {
-            $this->shout("Failed to restart FreeRADIUS: {$e->getMessage()}");
+            $this->climate->shout("Failed to restart FreeRADIUS: {$e->getMessage()}");
         }
     }
 
