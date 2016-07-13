@@ -1,0 +1,36 @@
+{
+    "name": "sonarsoftware/freeradius_installer",
+    "type": "project",
+    "description": "A simple installer for FreeRADIUS, specifically to use it with Sonar.",
+    "keywords": ["sonar","sonar software","sonar freeradius","freeradius"],
+    "homepage": "https://sonar.software",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simon Westlake",
+            "email": "simon@sonar.software",
+            "homepage": "https://sonar.software",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "support@sonar.software",
+        "forum": "https://sonar.community"
+    },
+    "require": {
+        "php" : "^5.5 || ^7.0",
+        "league/climate": "^3.2",
+        "vlucas/phpdotenv": "^2.3"
+    },
+    "autoload": {
+        "psr-4" : {
+            "SonarSoftware\\FreeRadius\\" : "src"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/SonarSoftware/freeradius_installer"
+        }
+    ]
+}

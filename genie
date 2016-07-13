@@ -1,0 +1,16 @@
+<?php
+use SonarSoftware\FreeRadius\Genie;
+
+require("vendor/autoload.php");
+
+$climate = new League\CLImate\CLImate;
+
+if (trim(shell_exec("whoami")) != "root")
+{
+    $climate->shout("Hey, please run me as root - I need to be able to modify some protected files on the filesystem!");
+    return;
+}
+
+$genie = new Genie();
+
+$response = $genie->initialSelection();
