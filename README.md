@@ -11,7 +11,7 @@ Once Ubuntu is installed, SSH in and run the following commands to prepare insta
 2. `sudo apt-get upgrade`
 3. `sudo apt-get install php-cli php-mbstring php-mysql unzip`
 
-Once these commands are complete, you can download the installer by executing `wget https://github.com/SonarSoftware/freeradius_installer/archive/master.zip` and then `unzip master.zip`. You can also install it using [Composer](https://getcomposer.org) if you prefer!
+Once these commands are complete, you can download the installer by executing `wget https://github.com/SonarSoftware/freeradius_genie/archive/master.zip` and then `unzip master.zip`. You can also install it using [Composer](https://getcomposer.org) if you prefer!
 
 Now execute the installer by running `php installer.php`
 
