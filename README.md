@@ -16,7 +16,7 @@ If you're using an older version of Ubuntu, you may need to run `sudo apt-get in
 Once these commands are complete, you should install MariaDB (a replacement for MySQL) and the FreeRADIUS server. Run the following commands to complete this step:
 
 1. `sudo apt-get install mariadb-server mariadb-client`
-2. `sudo apt-get -y install freeradius freeradius-common freeradius-utils freeradius-mysql`
+2. `sudo apt-get install freeradius freeradius-common freeradius-utils freeradius-mysql`
 
 ## Completing preliminary installation
 
