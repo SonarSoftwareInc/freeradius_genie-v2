@@ -13,13 +13,14 @@ Once Ubuntu is installed, SSH in and run the following commands to prepare insta
 
 If you're using an older version of Ubuntu, you may need to run `sudo apt-get install php5-cli php5-mbstring php5-mysql unzip` instead.
 
-Once these commands are complete, you can download the installer by executing `wget https://github.com/SonarSoftware/freeradius_genie/archive/master.zip` and then `unzip master.zip`. Once unzipped, enter the directory by typing `cd freeradius_genie-master`. You can also install it using [Composer](https://getcomposer.org) if you prefer - just `composer require sonarsoftware/freeradius_genie`!
+Once these commands are complete, you should install MariaDB (a replacement for MySQL) and the FreeRADIUS server. Run the following commands to complete this step:
 
-Now execute the installer by running `php installer.php`
+1. `sudo apt-get install mariadb-server mariadb-client`
+2. `sudo apt-get -y install freeradius freeradius-common freeradius-utils freeradius-mysql`
 
 ## Completing preliminary installation
 
-Once the installer has finished, all the necessary software to run your FreeRADIUS server will be installed. You will need to configure your SQL database before proceeding any further. To do this, run `/usr/bin/mysql_secure_installation` and answer the questions using the following:
+Now that all the necessary software to run your FreeRADIUS server is installed, you will need to configure your SQL database. To do this, run `/usr/bin/mysql_secure_installation` and answer the questions using the following:
 
 1. **Enter current password for root (enter for none):** - Press enter
 2. **Set root password? [Y/n]** - Press 'y'
