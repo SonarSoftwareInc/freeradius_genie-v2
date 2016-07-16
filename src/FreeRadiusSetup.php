@@ -22,11 +22,11 @@ class FreeRadiusSetup
 
         $this->climate->lightBlue()->inline("Configuring FreeRADIUS to use the SQL database... ");
         try {
-            Installer::executeCommand("/bin/cp " . __DIR__ . "/../conf/radiusd.conf /etc/freeradius/");
-            Installer::executeCommand("/bin/cp " . __DIR__ . "/../conf/sql.conf /etc/freeradius/");
-            Installer::executeCommand("/bin/cp " . __DIR__ . "/../conf/default /etc/freeradius/sites-available/");
-            Installer::executeCommand("/bin/sed -i 's/password = \"radpass\"/password = \"$mysqlPassword\"/g' /etc/freeradius/sql.conf");
-            Installer::executeCommand("/usr/sbin/service freeradius restart");
+            CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/radiusd.conf /etc/freeradius/");
+            CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/sql.conf /etc/freeradius/");
+            CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/default /etc/freeradius/sites-available/");
+            CommandExecutor::executeCommand("/bin/sed -i 's/password = \"radpass\"/password = \"$mysqlPassword\"/g' /etc/freeradius/sql.conf");
+            CommandExecutor::executeCommand("/usr/sbin/service freeradius restart");
         }
         catch (RuntimeException $e)
         {

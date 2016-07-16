@@ -76,7 +76,7 @@ class NasManagement
         }
 
         try {
-            Installer::executeCommand("/usr/sbin/service freeradius restart");
+            CommandExecutor::executeCommand("/usr/sbin/service freeradius restart");
         }
         catch (RuntimeException $e)
         {
@@ -124,7 +124,7 @@ class NasManagement
         {
             $this->climate->shout("NAS was deleted!");
             try {
-                Installer::executeCommand("/usr/sbin/service freeradius restart");
+                CommandExecutor::executeCommand("/usr/sbin/service freeradius restart");
             }
             catch (RuntimeException $e)
             {

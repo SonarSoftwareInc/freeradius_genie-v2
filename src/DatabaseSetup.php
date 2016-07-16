@@ -40,13 +40,13 @@ class DatabaseSetup
         try {
             if (file_exists("/etc/mysql/mariadb.conf.d/50-server.cnf"))
             {
-                Installer::executeCommand("/bin/sed -i 's/^bind-address/#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf");
-                Installer::executeCommand("/usr/sbin/service mysql restart");
+                CommandExecutor::executeCommand("/bin/sed -i 's/^bind-address/#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf");
+                CommandExecutor::executeCommand("/usr/sbin/service mysql restart");
             }
             elseif (file_exists("/etc/mysql/my.cnf"))
             {
-                Installer::executeCommand("/bin/sed -i 's/^bind-address/#bind-address/g' /etc/mysql/my.cnf");
-                Installer::executeCommand("/usr/sbin/service mysql restart");
+                CommandExecutor::executeCommand("/bin/sed -i 's/^bind-address/#bind-address/g' /etc/mysql/my.cnf");
+                CommandExecutor::executeCommand("/usr/sbin/service mysql restart");
             }
             else
             {
@@ -74,13 +74,13 @@ class DatabaseSetup
         try {
             if (file_exists("/etc/mysql/mariadb.conf.d/50-server.cnf"))
             {
-                Installer::executeCommand("/bin/sed -i 's/^#bind-address/bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf");
-                Installer::executeCommand("/usr/sbin/service mysql restart");
+                CommandExecutor::executeCommand("/bin/sed -i 's/^#bind-address/bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf");
+                CommandExecutor::executeCommand("/usr/sbin/service mysql restart");
             }
             elseif (file_exists("/etc/mysql/my.cnf"))
             {
-                Installer::executeCommand("/bin/sed -i 's/^#bind-address/bind-address/g' /etc/mysql/my.cnf");
-                Installer::executeCommand("/usr/sbin/service mysql restart");
+                CommandExecutor::executeCommand("/bin/sed -i 's/^#bind-address/bind-address/g' /etc/mysql/my.cnf");
+                CommandExecutor::executeCommand("/usr/sbin/service mysql restart");
             }
             else
             {
