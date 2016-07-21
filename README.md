@@ -20,9 +20,9 @@ Once these commands are complete, you should install MariaDB (a replacement for 
 
 ### A note on hosting
 
-If you're hosting this online, it's likely that your server does not have any swap memory setup. If you've selected a server with a low amount of RAM (1-2G), or even if you've picked more, it can be worthwhile setting up a swap partition to make sure you don't have into any out of memory errors.
-Your swap file size should be, at minimum, be equal to the amount of physical RAM on the server. It should be, at maximum, equal to 2x the amount of physical RAM on the server. A good rule of thumb is to just start by making it equal to the amount of available RAM. If you run into out of memory errors after
-doing this, you should increase the amount of RAM on your server rather than increasing swap.
+If you're hosting this online, it's likely that your server does not have any swap memory setup. If you've selected a server with a low amount of RAM (1-2G), or even if you've picked more, it can be worthwhile setting up a swap partition to make sure you don't run into any out of memory errors.
+Your swap file size should be, at minimum, be equal to the amount of physical RAM on the server. It should be, at maximum, equal to 2x the amount of physical RAM on the server. A good rule of thumb is to just start by making it equal to the amount of available RAM, increasing to double the RAM if you run into out of memory errors.
+If you run into out of memory errors after moving to 2x the amount of RAM, you should increase the amount of RAM on your server rather than increasing swap. The [SwapFaq](https://help.ubuntu.com/community/SwapFaq) on ubuntu.com can be helpful as well.
 
 To setup swap, run the following commands as root (or by putting 'sudo' in front of each command):
 
