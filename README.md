@@ -18,6 +18,24 @@ Once these commands are complete, you should install MariaDB (a replacement for 
 1. `sudo apt-get install mariadb-server mariadb-client`
 2. `sudo apt-get install freeradius freeradius-common freeradius-utils freeradius-mysql`
 
+### A note on hosting
+
+If you're hosting this online, it's likely that your server does not have any swap memory setup. If you've selected a server with a low amount of RAM (1-2G), or even if you've picked more, it can be worthwhile setting up a swap partition to make sure you don't have into any out of memory errors.
+Your swap file size should be, at minimum, be equal to the amount of physical RAM on the server. It should be, at maximum, equal to 2x the amount of physical RAM on the server. A good rule of thumb is to just start by making it equal to the amount of available RAM. If you run into out of memory errors after
+doing this, you should increase the amount of RAM on your server rather than increasing swap.
+
+To setup swap, run the following commands as root (or by putting 'sudo' in front of each command):
+
+1. `/usr/bin/fallocate -l 4G /swapfile` where 4G is equal to the size of the swap file in gigabytes.
+2. `/bin/chmod 600 /swapfile`
+3. `/sbin/mkswap /swapfile`
+4. `/sbin/swapon /swapfile`
+5. `echo "/swapfile   none    swap    sw    0   0" >> /etc/fstab`
+6. `/sbin/sysctl vm.swappiness=10`
+7. `echo "vm.swappiness=10" >> /etc/sysctl.conf`
+8. `/sbin/sysctl vm.vfs_cache_pressure=50`
+9. `echo "vm.vfs_cache_pressure=50" >> /etc/sysctl.conf`
+
 ## Completing preliminary installation
 
 Now that all the necessary software to run your FreeRADIUS server is installed, you will need to configure your SQL database. To do this, run `/usr/bin/mysql_secure_installation` and answer the questions using the following:
