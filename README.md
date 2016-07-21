@@ -18,6 +18,8 @@ Once these commands are complete, you should install MariaDB (a replacement for 
 1. `sudo apt-get install mariadb-server mariadb-client`
 2. `sudo apt-get install freeradius freeradius-common freeradius-utils freeradius-mysql`
 
+Once these commands are complete, you can download FreeRADIUS Genie by executing `wget https://github.com/SonarSoftware/freeradius_genie/archive/master.zip` and then `unzip master.zip`. Once unzipped, enter the directory by typing `cd freeradius_genie-master`.
+
 ### A note on hosting
 
 If you're hosting this online, it's likely that your server does not have any swap memory setup. If you've selected a server with a low amount of RAM (1-2G), or even if you've picked more, it can be worthwhile setting up a swap partition to make sure you don't run into any out of memory errors.
