@@ -164,3 +164,7 @@ You now have a very basic, functioning PPPoE server. Login to your Sonar instanc
  
 Now, back in the MikroTik, Click the **Active Connections** tab and try connecting using a PPPoE client, authenticating using the credentials you just created in Sonar. You should be assigned an IP from the pool, and the connection will show up in the list! To assign a static IP, navigate back into Sonar, 
 go to the **Network** tab on an account, and then **IP Assignments**. Assign an IP to the RADIUS account, and then disconnect and reconnect your PPPoE client. You will be assigned the static IP you selected.
+
+### Scaling FreeRADIUS to large networks
+
+The FreeRADIUS [guide to scaling is pretty simple.](http://freeradius.org/features/scalability.html) The short version is, give it lots of RAM, CPU, fast disks, and tweak the couple of settings mentioned in the [scalability guide.](http://freeradius.org/features/scalability.html) If you're running a big network with hundreds of thousands and subscribers, and you want some help, let us know!
