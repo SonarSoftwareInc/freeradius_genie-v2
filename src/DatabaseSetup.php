@@ -43,6 +43,11 @@ class DatabaseSetup
                 CommandExecutor::executeCommand("/bin/sed -i 's/^bind-address/#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf");
                 CommandExecutor::executeCommand("/usr/sbin/service mysql restart");
             }
+            elseif (file_exists("/etc/mysql/mysql.conf.d/mysqld.cnf"))
+            {
+                CommandExecutor::executeCommand("/bin/sed -i 's/^bind-address/#bind-address/g' /etc/mysql/mysql.conf.d/mysqld.cnf");
+                CommandExecutor::executeCommand("/usr/sbin/service mysql restart");
+            }
             elseif (file_exists("/etc/mysql/my.cnf"))
             {
                 CommandExecutor::executeCommand("/bin/sed -i 's/^bind-address/#bind-address/g' /etc/mysql/my.cnf");
@@ -75,6 +80,11 @@ class DatabaseSetup
             if (file_exists("/etc/mysql/mariadb.conf.d/50-server.cnf"))
             {
                 CommandExecutor::executeCommand("/bin/sed -i 's/^#bind-address/bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf");
+                CommandExecutor::executeCommand("/usr/sbin/service mysql restart");
+            }
+            elseif (file_exists("/etc/mysql/mysql.conf.d/mysqld.cnf"))
+            {
+                CommandExecutor::executeCommand("/bin/sed -i 's/^#bind-address/bind-address/g' /etc/mysql/mysql.conf.d/mysqld.cnf");
                 CommandExecutor::executeCommand("/usr/sbin/service mysql restart");
             }
             elseif (file_exists("/etc/mysql/my.cnf"))
