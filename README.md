@@ -177,6 +177,8 @@ It's possible to further secure your FreeRADIUS installation with a couple of st
 
 Configuring Sonar to use TLS to connect to the SQL server backing FreeRADIUS will ensure all data transferred is encrypted. The overhead is minimal, it just requires some effort to do the initial setup and make the necessary changes in Sonar. This guide assumes you have followed the steps above, you're using Ubuntu 16.04 and MariaDB.
 
+In order for SSL connectivity to work, your RADIUS server must be entered into Sonar with a hostname (e.g. **radius.sonar.software**) and not an IP address. The certificate we generate below **must** match the hostname exactly.
+
 First, we're going to make a folder to store our certs in.
 
 `mkdir /etc/mysql/certs`
@@ -187,21 +189,19 @@ Now we're going to create the certificates. Run the commands below.
 
 `openssl req -sha1 -new -x509 -nodes -days 10000 -key /etc/mysql/certs/ca-key.pem > /etc/mysql/certs/ca-cert.pem`
 
-When running the second command, you will be prompted to enter some variables. Just fill in some reasonable data here, it doesn't really matter to us at this point.
+When running the second command, you will be prompted to enter some variables. Just fill in some reasonable data here, but make sure the **Common Name** field is **NOT** the exact hostname of your RADIUS server. Set it to something different, for example **SonarRadius**.
 
 `openssl req -sha1 -newkey rsa:2048 -days 10000 -nodes -keyout /etc/mysql/certs/server-key.pem > /etc/mysql/certs/server-req.pem`
 
-You will again be prompted to enter variables here. Enter the same data as you entered previously, but when prompted for a challenge password, just press enter.
+You will again be prompted to enter variables here. Enter the same data as you entered previously, but this time make sure the **Common Name** field is the exact hostname of your RADIUS server. When prompted for a challenge password, just press enter.
 
 `openssl x509 -sha1 -req -in /etc/mysql/certs/server-req.pem -days 10000 -CA /etc/mysql/certs/ca-cert.pem -CAkey /etc/mysql/certs/ca-key.pem -set_serial 01 > /etc/mysql/certs/server-cert.pem`
-
-Again, fill in the variables and leave the challenge password blank.
 
 `openssl rsa -in /etc/mysql/certs/server-key.pem -out /etc/mysql/certs/server-key.pem`
 
 `openssl req -sha1 -newkey rsa:2048 -days 10000 -nodes -keyout /etc/mysql/certs/client-key.pem > /etc/mysql/certs/client-req.pem`
 
-Again, fill in the variables and leave the challenge password blank.
+Again, fill in the variables. This time, set **Common Name** to **Sonar**, and leave the challenge password blank.
 
 `openssl x509 -sha1 -req -in /etc/mysql/certs/client-req.pem -days 10000 -CA /etc/mysql/certs/ca-cert.pem -CAkey /etc/mysql/certs/ca-key.pem -set_serial 01 > /etc/mysql/certs/client-cert.pem`
 
@@ -230,3 +230,5 @@ You can verify if SSL is now enabled by doing the following:
 Once in the MySQL command line, do `show global variables like 'have_ssl';` and you should see `have_ssl` with a value of `YES`. If you do not, go back through the preceeding steps and redo all steps until the value becomes `YES`.
 
 You now need to transfer the client files and the ca-cert.pem file from this server to your Sonar instance. A quick and easy way to do this is to use [FileZilla](https://filezilla-project.org/) to connect via SFTP, and then download the files. You will need `client-key.pem`, `client-cert.pem`, and `ca-cert.pem`.
+
+Navigate to the Sonar RADIUS configuration page at **Network > Provisioning > RADIUS Server**. Configure your RADIUS server here, and save. After that's done, check the checkbox labelled **Enable SSL connectivity** and upload the client key, client certificate, and CA certificate from your RADIUS server. Click **Save** and then click **Validate Credentials** at the top of the page. If the credential validation now fails (and it was working previously) then you have not performed a step here properly - go back to the beginning and start over. The most common cause of the error is not entering the proper values in the **Common Name** fields when generating the certificates, or misconfiguring the MySQL server.
