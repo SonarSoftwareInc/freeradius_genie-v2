@@ -171,7 +171,7 @@ The FreeRADIUS [guide to scaling is pretty simple.](http://freeradius.org/featur
 
 ## Further security
 
-It's possible to further secure your FreeRADIUS installation with a couple of steps, detailed below.
+It's possible to further secure your FreeRADIUS installation with a couple of steps, detailed below. These steps are not required, but are recommended.
 
 ### Configuring the connectivity between Sonar and FreeRADIUS to use TLS
 
@@ -213,12 +213,11 @@ You now have all the certificates generated that we'll need to enable TLS connec
 
 Once inside the configuration file, add these lines to the end of the file:
 
-` ssl-ca=/etc/mysql/certs/ca-cert.pem
+`ssl-ca=/etc/mysql/certs/ca-cert.pem`
 
-  ssl-cert=/etc/mysql/certs/server-cert.pem
+`ssl-cert=/etc/mysql/certs/server-cert.pem`
 
-  ssl-key=/etc/mysql/certs/server-key.pem
-`
+`ssl-key=/etc/mysql/certs/server-key.pem`
 
 Now restart MariaDB:
 
