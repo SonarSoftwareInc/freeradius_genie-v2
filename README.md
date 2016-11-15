@@ -168,3 +168,66 @@ go to the **Network** tab on an account, and then **IP Assignments**. Assign an 
 ### Scaling FreeRADIUS to large networks
 
 The FreeRADIUS [guide to scaling is pretty simple.](http://freeradius.org/features/scalability.html) The short version is, give it lots of RAM, CPU, fast disks, and tweak the couple of settings mentioned in the [scalability guide.](http://freeradius.org/features/scalability.html) If you're running a big network with hundreds of thousands and subscribers, and you want some help, let us know!
+
+## Further security
+
+It's possible to further secure your FreeRADIUS installation with a couple of steps, detailed below.
+
+### Configuring the connectivity between Sonar and FreeRADIUS to use TLS
+
+Configuring Sonar to use TLS to connect to the SQL server backing FreeRADIUS will ensure all data transferred is encrypted. The overhead is minimal, it just requires some effort to do the initial setup and make the necessary changes in Sonar. This guide assumes you have followed the steps above, you're using Ubuntu 16.04 and MariaDB.
+
+First, we're going to make a folder to store our certs in.
+
+`mkdir /etc/mysql/certs`
+
+Now we're going to create the certificates. Run the commands below.
+
+`openssl genrsa 2048 > /etc/mysql/certs/ca-key.pem`
+
+`openssl req -sha1 -new -x509 -nodes -days 10000 -key /etc/mysql/certs/ca-key.pem > /etc/mysql/certs/ca-cert.pem`
+
+When running the second command, you will be prompted to enter some variables. Just fill in some reasonable data here, it doesn't really matter to us at this point.
+
+`openssl req -sha1 -newkey rsa:2048 -days 10000 -nodes -keyout /etc/mysql/certs/server-key.pem > /etc/mysql/certs/server-req.pem`
+
+You will again be prompted to enter variables here. Enter the same data as you entered previously, but when prompted for a challenge password, just press enter.
+
+`openssl x509 -sha1 -req -in /etc/mysql/certs/server-req.pem -days 10000 -CA /etc/mysql/certs/ca-cert.pem -CAkey /etc/mysql/certs/ca-key.pem -set_serial 01 > /etc/mysql/certs/server-cert.pem`
+
+Again, fill in the variables and leave the challenge password blank.
+
+`openssl rsa -in /etc/mysql/certs/server-key.pem -out /etc/mysql/certs/server-key.pem`
+
+`openssl req -sha1 -newkey rsa:2048 -days 10000 -nodes -keyout /etc/mysql/certs/client-key.pem > /etc/mysql/certs/client-req.pem`
+
+Again, fill in the variables and leave the challenge password blank.
+
+`openssl x509 -sha1 -req -in /etc/mysql/certs/client-req.pem -days 10000 -CA /etc/mysql/certs/ca-cert.pem -CAkey /etc/mysql/certs/ca-key.pem -set_serial 01 > /etc/mysql/certs/client-cert.pem`
+
+`openssl rsa -in /etc/mysql/certs/client-key.pem -out /etc/mysql/certs/client-key.pem`
+
+You now have all the certificates generated that we'll need to enable TLS connectivity. We now need to reconfigure MariaDB to use these certificates.
+
+`nano /etc/mysql/mariadb.conf.d/50-server.cnf`
+
+Once inside the configuration file, add these lines to the end of the file:
+
+` ssl-ca=/etc/mysql/certs/ca-cert.pem
+
+  ssl-cert=/etc/mysql/certs/server-cert.pem
+
+  ssl-key=/etc/mysql/certs/server-key.pem
+`
+
+Now restart MariaDB:
+
+`service mysql restart`
+
+You can verify if SSL is now enabled by doing the following:
+
+`mysql -uroot -p<YOUR ROOT MYSQL PASSWORD HERE>`
+
+Once in the MySQL command line, do `show global variables like 'have_ssl';` and you should see `have_ssl` with a value of `YES`. If you do not, go back through the preceeding steps and redo all steps until the value becomes `YES`.
+
+You now need to transfer the client files and the ca-cert.pem file from this server to your Sonar instance. A quick and easy way to do this is to use [FileZilla](https://filezilla-project.org/) to connect via SFTP, and then download the files. You will need `client-key.pem`, `client-cert.pem`, and `ca-cert.pem`.
