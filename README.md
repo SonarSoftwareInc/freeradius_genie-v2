@@ -40,7 +40,7 @@ To setup swap, run the following commands as root (or by putting 'sudo' in front
 
 ## Completing preliminary installation
 
-Now that all the necessary software to run your FreeRADIUS server is installed, you will need to configure your SQL database. To do this, run `/usr/bin/mysql_secure_installation` and answer the questions using the following:
+Now that all the necessary software to run your FreeRADIUS server is installed, you will need to configure your SQL database. To do this, run `sudo /usr/bin/mysql_secure_installation` and answer the questions using the following:
 
 1. **Enter current password for root (enter for none):** - Press enter
 2. **Set root password? [Y/n]** - Press 'y'
