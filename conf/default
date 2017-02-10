@@ -220,6 +220,10 @@ authorize {
 #	Autz-Type Status-Server {
 #
 #	}
+    if(User-Name){
+        if("%{sql:UPDATE radacct set AcctStopTime=ADDDATE(AcctStartTime,INTERVAL AcctSessionTime SECOND), AcctTerminateCause='Clear-Stale Session' WHERE UserName='%{User-Name}' and CallingStationId='%{Calling-Station-Id}' and AcctStopTime is NULL}"){
+        }
+    }
 }
 
 
