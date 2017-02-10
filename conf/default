@@ -221,7 +221,7 @@ authorize {
 #
 #	}
     if(User-Name){
-        if("%{sql:UPDATE radacct set AcctStopTime=ADDDATE(AcctStartTime,INTERVAL AcctSessionTime SECOND), AcctTerminateCause='Clear-Stale Session' WHERE UserName='%{User-Name}' and CallingStationId='%{Calling-Station-Id}' and AcctStopTime is NULL}"){
+        if("%{sql:UPDATE radacct set acctstoptime=ADDDATE(acctstarttime,INTERVAL acctsessiontime SECOND), acctterminatecause='Clear-Stale Session' WHERE username='%{User-Name}' and callingstationid='%{Calling-Station-Id}' and acctstoptime is NULL}"){
         }
     }
 }
