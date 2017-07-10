@@ -28,6 +28,7 @@ class Genie
             '_initial' => 'Initial configuration',
             '_nas' => 'NAS configuration',
             '_mysqlRemote' => 'MySQL remote access configuration',
+            '_thirdParty' => 'Third party configuration',
             '_quit' => 'Quit',
         ];
         $input = $this->climate->lightGreen()->radio('Please select an action to perform:', $options);
@@ -121,6 +122,11 @@ class Genie
                     'remove_user' => 'Remove a remote access user',
                 ];
                 break;
+            case "_thirdParty":
+                $options = [
+                    'mimosa' => 'Enable integration with Mimosa',
+                ];
+                break;
             default:
                 break;
         }
@@ -209,6 +215,15 @@ class Genie
                         break;
                     case "remove_user":
                         $databaseSetup->deleteRemoteAccessUser();
+                        break;
+                }
+                break;
+            case "_thirdParty":
+                switch ($subMenuSelection)
+                {
+                    case "mimosa":
+                        $mimosa = new Mimosa();
+                        $mimosa->updateEap();
                         break;
                 }
                 break;

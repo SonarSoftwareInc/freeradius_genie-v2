@@ -86,6 +86,9 @@ authorize {
 	#  It takes care of processing the 'raddb/hints' and the
 	#  'raddb/huntgroups' files.
 	preprocess
+	update control {
+        EAP-TLS-Require-Client-Cert = yes
+    }
 
 	#
 	#  If you want to have a log of authentication requests,

@@ -33,6 +33,7 @@ class FreeRadiusSetup
             $this->climate->shout("FAILED!");
             $this->climate->shout($e->getMessage());
             $this->climate->shout("See /tmp/_genie_output for failure details.");
+            return;
         }
 
         $this->climate->info("SUCCESS!");
