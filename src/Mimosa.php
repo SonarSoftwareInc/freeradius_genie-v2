@@ -21,13 +21,14 @@ class Mimosa
             CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/thirdparty/mimosa/eap.conf /etc/freeradius/");
 
             CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/thirdparty/mimosa/*.pem /etc/freeradius/certs/");
-            CommandExecutor::executeCommand("(cd /etc/freeradius/certs; /usr/bin/c_rehash)");
+            CommandExecutor::executeCommand("(cd /etc/freeradius/certs; sh /usr/bin/c_rehash)");
 
             CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/thirdparty/mimosa/dictionary.mimosa /etc/freeradius/");
             CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/thirdparty/mimosa/dictionary /etc/freeradius/");
 
             //Copy this over again due to the EAP changes that may be missing
             CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/default /etc/freeradius/sites-available/");
+            CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/inner-tunnel /etc/freeradius/sites-available/");
 
             CommandExecutor::executeCommand("/usr/sbin/service freeradius restart");
         }
