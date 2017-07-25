@@ -21,7 +21,7 @@ class Mimosa
             CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/thirdparty/mimosa/eap.conf /etc/freeradius/");
 
             CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/thirdparty/mimosa/*.pem /etc/freeradius/certs/");
-            CommandExecutor::executeCommand("(cd /etc/freeradius/certs; /usr/bin/c_rehash)");
+            CommandExecutor::executeCommand("(cd /etc/freeradius/certs; /usr/bin/c_rehash .)");
 
             CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/thirdparty/mimosa/dictionary.mimosa /etc/freeradius/");
             CommandExecutor::executeCommand("/bin/cp " . __DIR__ . "/../conf/thirdparty/mimosa/dictionary /etc/freeradius/");
