@@ -18,7 +18,7 @@ Once these commands are complete, you should install MariaDB (a replacement for 
 1. `sudo apt-get install mariadb-server mariadb-client`
 2. `sudo apt-get install freeradius freeradius-common freeradius-utils freeradius-mysql`
 
-Once these commands are complete, you can download FreeRADIUS Genie by executing `wget https://github.com/SonarSoftware/freeradius_genie/archive/master.zip` and then `unzip master.zip`. Once unzipped, enter the directory by typing `cd freeradius_genie-master`.
+Once these commands are complete, you can download FreeRADIUS Genie by executing `wget https://github.com/SonarSoftwareInc/freeradius_genie-v2/archive/master.zip` and then `unzip master.zip`. Once unzipped, enter the directory by typing `cd freeradius_genie-v2-master`.
 
 ### A note on hosting
 
