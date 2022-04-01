@@ -1,3 +1,5 @@
+# This tool is deprecated and should no longer be used, as Ubuntu 16 and FreeRADIUS 2 are out of date. Please check out the [FreeRADIUS HOWTO](https://wiki.freeradius.org/guide/HOWTO) - Sonar just requires a MySQL backed FreeRADIUS server to function.
+
 # FreeRADIUS Genie
 An installer to setup and configure FreeRADIUS for use with Sonar.
 
